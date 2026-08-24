@@ -167,3 +167,15 @@
 - 新增「🐙实用Git仓库」分类 8 项：Ding-zibo/Biology、ximiku/HanaBio-Archive、
   ossu/bioinformatics、biopython/biopython、shenwei356/seqkit、openstax 组织、
   GitHub 话题 biology-olympiad 与 biology（均探测可达，404 的 danisven/awesome-bioinformatics 已剔除）。
+
+===============================================
+GitHub 发布信息
+===============================================
+- 仓库：https://github.com/huicishengbodebianfu/biology-competition （公开）
+  注：GitHub 仓库名不支持纯中文，"生物竞赛各省题目"转为英文名。
+- 导航站在线版（GitHub Pages，gh-pages 分支）：
+  https://huicishengbodebianfu.github.io/biology-competition/
+  在线模式下「本地资料速览」自动映射为仓库对应目录链接。
+- 全库打包下载（Release v1.0 资产，约282MB）：
+  https://github.com/huicishengbodebianfu/biology-competition/releases/latest/download/biology-competition-full.zip
+  本地副本：D:\生物竞赛各省题目-全库打包.zip
