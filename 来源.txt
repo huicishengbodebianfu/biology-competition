@@ -1,0 +1,169 @@
+全国中学生生物学竞赛 资源库下载来源
+================================================
+整理日期：2026年（本环境当前日期）
+根目录：生物竞赛各省题目\
+
+目录结构说明：
+- 根目录        = 真题（全国中学生生物学联赛统一卷 2015-2026，各省赛区通用）
+- 模拟题\       = 省级初赛全卷（四川省初赛2019-2026、浙江省初赛2022），用作联赛全卷模拟练习
+- 复习题\       = 章节复习讲义（细胞信号转导、光合作用等分章课件）
+- 资料\         = 复习资料（考试大纲、章程、实施细则、考试通知、免费知识库）
+- 国外竞赛\     = 国外官方免费公开竞赛真题（加拿大NBC·英国BBO·澳大利亚ASOB）
+- 导航\         = 资源.html 液态玻璃导航站（站点分类导航 + 本地资料速览）
+- 来源.txt      = 本文件
+
+命名规则：年份-地区-范围-内容.扩展名（地区：全国/四川省/浙江省；范围：联赛/初赛/竞赛）
+
+------------------------------------------------
+一、真题（根目录）：全国联赛 2015-2026
+------------------------------------------------
+【来源A：中国动物学会 czs.org.cn — "联赛试题下载"官方栏目】
+  栏目页：https://www.czs.org.cn/swjs/lsstxz/index.html
+  下载接口：https://www.czs.org.cn/api-gateway/jpaas-web-server/front/document/download?fileUrl=…&fileName=…
+  （下列年份通过该接口取得，直链含加密token）
+  - 2015-全国联赛-试题.pdf（官方文件名误作"205年"）
+  - 2017-全国联赛-试题/答案解析
+  - 2019-全国联赛-答案解析.doc
+  - 2021-全国联赛-试题.pdf / 答案解析.pdf
+  - 2023-全国联赛-试题.pdf / 答案解析.pdf
+  文章页示例：https://www.czs.org.cn/swjs/lsstxz/art/2022/art_6b73ddbaf7eb485eb4deffa8f84845dd.html
+
+【来源B：中国植物学会 botany.org.cn — "生物学联赛"官方栏目】
+  栏目页：http://www.botany.org.cn/swxjs/swxls/
+  - 2016-全国联赛-试题.pdf ：http://www.botany.org.cn/swxjs/swxls/201605/P020250623506500700873.pdf
+  - 2016-全国联赛-答案解析.pdf ：http://www.botany.org.cn/swxjs/swxls/201605/P020250623506500799727.pdf
+  - 2018-全国联赛-试题.pdf ：http://www.botany.org.cn/swxjs/swxls/201805/P020250623506545733928.pdf
+  - 2018-全国联赛-答案解析.pdf ：http://www.botany.org.cn/swxjs/swxls/201805/P020250623506545826293.pdf
+  - 2020-全国联赛-试题/答案解析/加赛试题/加赛答案解析.pdf ：/swxjs/swxls/202009/P020250623506611*.pdf
+  - 2022-全国联赛-试题/答案解析.pdf ：/swxjs/swxls/202305/P020250623512103*.pdf
+  - 2024-全国联赛-试题/答案解析.pdf ：/swxjs/swxls/202405/P020250623512714*.pdf
+  - 2026-全国联赛-试题/答案解析.pdf ：/swxjs/swxls/202605/P020260519348970*.pdf
+
+【来源C：巴蜀高中生物之家 chsbo.com（四川省植物学会主办）】
+  - 2025-全国联赛-试题.pdf ：http://chsbo.com/uploadfiles/2025年全国中学生生物学联赛试题.pdf
+  - 2025-全国联赛-答案解析.pdf ：http://chsbo.com/uploadfiles/2025年全国中学生生物学联赛标准答案.pdf
+  - 2026-全国联赛-试题.pdf ：http://chsbo.com/uploadfiles/2026年全国中学生生物学联赛试题.pdf
+  - 2026-全国联赛-答案解析.pdf ：http://chsbo.com/uploadfiles/2026年全国中学生生物学联赛标准答案.pdf
+  - 2019-全国联赛-试题.pdf ：http://chsbo.com/ckeditor/plugins/stylesheetparser/0e928211-f94d-492b-b594-93cf572538a7/2019年…联赛试题.pdf
+
+【来源D：宁夏大学/宁夏生物学会 sls.nxu.edu.cn】
+  - 2017-全国联赛-试题.pdf ：https://sls.nxu.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1362587084&wbfileid=418279
+  - 2017-全国联赛-答案解析.pdf ：…&wbfileid=418289
+
+------------------------------------------------
+二、模拟题\：省级初赛全卷（2019-2026）
+------------------------------------------------
+【来源：巴蜀高中生物之家 chsbo.com】
+  - 四川省初赛 2019、2020（试题+答案）：http://chsbo.com/ckeditor/plugins/stylesheetparser/0e928211-f94d-492b-b594-93cf572538a7/…年四川省高中生物学竞赛初赛(试题/答案).pdf
+  - 四川省初赛 2021-2026（试题+答案）：http://chsbo.com/uploadfiles/…年全国中学生生物学联赛四川省赛区初赛试题(答案).pdf
+    文章页：shownews.aspx?id=223(2021)/225(2022)/226(2023)，newslist.aspx?_m=2 可浏览完整列表
+
+【来源：浙江省植物学会 zjbs.org（浙江赛区）】
+  - 2022-浙江省-初赛试题.pdf ：http://www.zjbs.org/ueditor/php/upload/file/20220310/1646901413149348.pdf
+  - 2022-浙江省-初赛答案解析.pdf ：http://www.zjbs.org/ueditor/php/upload/file/20220310/1646901201350261.pdf
+
+------------------------------------------------
+三、复习题\：章节复习讲义
+------------------------------------------------
+【来源：GitHub 仓库 Ding-zibo/Biology（公开）】
+  仓库：https://github.com/Ding-zibo/Biology （raw：https://raw.githubusercontent.com/Ding-zibo/Biology/main/）
+  本文件夹已收录 5 个较小文件；其余大文件（细胞信号转导概述、G蛋白偶联受体、酶联受体、
+  基因转录调控、核糖体、细胞周期、细胞核与染色质 等 .pptx/.ppt 共7个，17-24MB/个）建议直接
+  到仓库网页下载或 git clone。
+
+------------------------------------------------
+四、资料\：复习资料
+------------------------------------------------
+【来源：中国动物学会 czs.org.cn】
+  - 全国-竞赛-考试大纲.pdf（10页扫描件合成PDF）：
+    原文页：https://www.czs.org.cn/swjs/gkjssxz/art/2025/art_5e199d4cf0f743c49f9834faea59ac2b.html
+    （原文为10张JPEG扫描图，已合并为单个PDF）
+
+【来源：中国植物学会 botany.org.cn】
+  - 全国-联赛-竞赛章程.txt ：http://www.botany.org.cn/swxjs/zchssxz/201912/t20191225_584941.html
+  - 全国-联赛-实施细则.txt ：http://www.botany.org.cn/swxjs/zchssxz/201912/t20191225_584942.html
+
+【来源：巴蜀生物之家 chsbo.com】
+  - 2023-全国-联赛-考试通知含范围.pdf ：http://www.chsbo.com/uploadfiles/2023年全国中学生生物学联赛通知.pdf
+
+【来源：免费开源知识库】
+  - 花火生物档案 HanaBio-Archive（生竞四大块复习知识库）：
+    网页：https://ximiku.github.io/HanaBio-Archive/ ；仓库zip：https://github.com/ximiku/HanaBio-Archive/archive/refs/heads/main.zip
+  - 混乱邪恶生物竞赛 BioNote（博客园复习笔记）：
+    https://www.cnblogs.com/PCwqyy/p/-/BioNote
+
+------------------------------------------------
+五、国际奥赛IBO\：国际生物奥林匹克竞赛真题（官方CC授权）
+------------------------------------------------
+【来源：IBO 官方信息中心 ibo-info.org】
+  试卷页：https://www.ibo-info.org/en/info/papers.html
+  下载路径：https://www.ibo-info.org/files/downloads/papers/（按年份·举办国分目录）
+  已收录 2017-2024 理论卷（Theory/Theoretical）及官方答案/解析（Answer key/Solutions），共21个PDF。
+  注：IBO 试卷为 Creative Commons CC BY-NC-SA 授权，可自由用于非商业教学（须署名IBO）。
+  另：biolympiads.com（https://biolympiads.com/international-biology-olympiad-ibo-past-papers/）
+      为生竞免费资源站，含IBO真题索引、解题技巧等，可在线查阅。
+
+------------------------------------------------
+六、国外竞赛\：国外官方竞赛真题（主办方官网免费公开）
+------------------------------------------------
+【来源：多伦多大学生物竞赛 NBC biocomp.utoronto.ca】
+  试卷页：https://biocomp.utoronto.ca/exams/
+  直链路径：https://biocomp.utoronto.ca/wp-content/blogs.dir/99/files/sites/30/…
+  已收录 2015-2019、2024-2026 共8年 试题+答案解析（2015-2017 位于 /2023/10/ 子目录）。
+
+【来源：英国生物奥赛 BBO · UKBC ukbiologycompetitions.org】
+  页面：https://ukbiologycompetitions.org/british-biology-olympiad/
+  已收录 2019-2024 共6份官方试卷 PDF（BBO2019.pdf / BBO2020.pdf / BBO-2021-online.pdf /
+  BBO2022.pdf / British-Biology-Olympiad-2023-Paper-1-and-2.pdf / …2024-Paper-1-and-2.pdf），
+  均位于 ukbiologycompetitions.org/wp-content/uploads/ 下。
+
+【来源：澳大利亚科学奥赛 ASO Biology asi.edu.au】
+  页面：https://asi.edu.au/program/australian-science-olympiads/past-exam-papers-and-solutions/biology-olympiad-past-exams/
+  直链路径：https://asi.edu.au/wp-content/uploads/…
+  已收录 2016、2018-2025 共9年（17个PDF；2022 为"试题含答案"合订版）。
+  更早年份（2007-2013）同页可下载，未逐一收录。
+
+【USABO（美国生物奥赛）】：官网 https://www.usabo-trc.org/
+  历年公开赛真题合集（Google Drive，biolympiads.com 维护索引）：https://biolympiads.com/usabo/
+
+注：以上试卷版权归各主办方所有，仅供个人学习交流使用。
+
+------------------------------------------------
+七、补充线索（未能免费直链获取，供参考）
+------------------------------------------------
+1. 全国决赛（CNBO）候选扫描PDF（zizzs CDN，内容未逐一确认，可能含决赛卷）：
+   https://cdn.zizzs.com/zixunzhan/202310/0af54e28-4aa0-47da-a3c0-0dbb7b17ca7d.pdf （11.7MB，疑似决赛理论卷）
+   https://cdn.zizzs.com/zixunzhan/202310/2297efe6-7895-4e7b-9f20-7dff7a85f3bf.pdf
+   https://cdn.zizzs.com/zixunzhan/202310/d341e193-f9b0-4c36-9cd6-cedd08a3e191.pdf
+   https://cdn.zizzs.com/zixunzhan/202310/d26788f1-5e7b-4ec6-b5a8-e27c0450cdf9.pdf
+   https://cdn.zizzs.com/zixunzhan/202402/cd81df46-6a81-4eda-b273-6ee18c5ae0d3.pdf
+   https://cdn.zizzs.com/zixunzhan/202310/85a9ac70-b628-4b9c-a270-da76b4342b2b.pdf
+2. 各省初赛/预赛（浙江、江苏、山东、江西、湖南、广东、湖北等）官方不公开直链，仅在付费/登录站：
+   21世纪教育网 zy.21cnjy.com、人人文库 renrendoc.com、book118、百度文库、七彩学科网 7cxk.com 等。
+3. 网盘合集（52pojie 求助帖，需登录）：
+   https://www.52pojie.cn/thread-1835750-1-1.html
+   （百度网盘 https://pan.baidu.com/s/1T64rDw6KahwOtjRjIDROtQ?pwd=s5bq ；蓝奏云 https://wwi.lanzoup.com/b01fhv6lc）
+4. 高考直通车 2014-2023 联赛合集（App内下载）：https://app.gaokaozhitongche.com/newsexam/h/PMjBlZQM
+
+================================================
+统计：
+- 真题（全国联赛）：2015-2026 共12年，试题+答案解析（2015缺答案、2019答案为doc）
+- 模拟题（省级初赛）：四川 2019-2026 共8年 + 浙江 2022，共18个PDF
+- 复习题（章节讲义）：5个
+- 资料（大纲/章程/细则/通知/知识库/教材清单）：7个
+- 国际奥赛IBO（2017-2024理论卷+答案）：21个
+- 国外竞赛（加拿大NBC 16 + 英国BBO 6 + 澳大利亚ASOB 17）：39个，约98MB
+合计 116 个文件（另有 资料\HanaBio-Archive-main 解压出的知识库子目录）
+
+导航页更新记录（导航\资源.html）：
+- 新增分类：🌍国外竞赛真题 · 🧪开放课程与虚拟实验 · 🧬专业数据库与工具 ·
+  🌿物种图鉴与图像库 · 💬社区与备考资讯 · 💾本地资料速览（相对路径指向本库各文件夹）
+- 新增站点均已逐一探测可达性；cfh.ac.cn / sp2000.org.cn 当前网络不可达故未收录。
+- 敏感站点扩充：新增 Library Genesis、BookSC、PDF Drive、PDF Room、Zhelper，
+  Sci-Hub 补充 sci-hub.ee 镜像；说明区增加使用搭配提示（LibGen 查找 Campbell Biology 等
+  英文原版教材最有效；LibGen 系国内网络直连常超时，需代理）。
+- 界面改版：移除卡片反光扫光效果；升级液态玻璃质感（动态氛围光斑 + 高斯模糊 + 内高光阴影）；
+  全站按钮增加立体阴影与按压反馈；粒子改为常驻氛围粒子场（缓慢上浮、鼠标斥力、点击涟漪）。
+- 新增「🐙实用Git仓库」分类 8 项：Ding-zibo/Biology、ximiku/HanaBio-Archive、
+  ossu/bioinformatics、biopython/biopython、shenwei356/seqkit、openstax 组织、
+  GitHub 话题 biology-olympiad 与 biology（均探测可达，404 的 danisven/awesome-bioinformatics 已剔除）。
