@@ -138,8 +138,17 @@
    https://cdn.zizzs.com/zixunzhan/202310/d26788f1-5e7b-4ec6-b5a8-e27c0450cdf9.pdf
    https://cdn.zizzs.com/zixunzhan/202402/cd81df46-6a81-4eda-b273-6ee18c5ae0d3.pdf
    https://cdn.zizzs.com/zixunzhan/202310/85a9ac70-b628-4b9c-a270-da76b4342b2b.pdf
-2. 各省初赛/预赛（浙江、江苏、山东、江西、湖南、广东、湖北等）官方不公开直链，仅在付费/登录站：
-   21世纪教育网 zy.21cnjy.com、人人文库 renrendoc.com、book118、百度文库、七彩学科网 7cxk.com 等。
+2. 各省初赛/预赛免费渠道深度排查（2026-08 复查，结论：川浙之外暂无免费公开直链）：
+   - 浙江省植物学会 zjbs.org 全站155篇文章逐一枚举：仅2022年初赛卷公开（已收录）；
+     其余年份附件为通知/报名表/获奖名单/承办申请，无试卷；
+   - 湖北/江苏/山东/广东/湖南/山西/上海等省学会常见域名均不存在或不可达；
+   - GitHub 相关207个仓库与 Gitee 检索均无真题合集（BioQuest ★114 为自建题库非真题）；
+   - 必应/搜狗搜索有效结果全部导向登录墙文档站（百度文库/人人文库/doc88/
+     腾讯文档/自主选拔在线"进群领取"引流页），无开放直链；
+   - 巴蜀站(chsbo.com)现存12篇文章仅涉四川，2019-2023旧帖已下架列表页。
+   获取途径剩余：① 文库类站点账号手动下载（21世纪教育网 zy.21cnjy.com、
+   学科网 zxxk.com、百度文库、七彩学科网 7cxk.com 等）；
+   ② 定向委托：指定省份+年份，可尝试公众号图片版合成PDF（耗时长、清晰度受限）。
 3. 网盘合集（52pojie 求助帖，需登录）：
    https://www.52pojie.cn/thread-1835750-1-1.html
    （百度网盘 https://pan.baidu.com/s/1T64rDw6KahwOtjRjIDROtQ?pwd=s5bq ；蓝奏云 https://wwi.lanzoup.com/b01fhv6lc）
