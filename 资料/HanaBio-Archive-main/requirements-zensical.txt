@@ -1,0 +1,2 @@
+# 生产站点始终跟进安装时的最新 Zensical 版本。
+zensical

@@ -1,0 +1,7 @@
+/.venv/
+/.venv-zensical/
+site/
+__pycache__/
+.DS_Store
+writing_standard.md
+.vscode
