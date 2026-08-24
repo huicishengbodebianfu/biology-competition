@@ -435,7 +435,8 @@ const CATEGORIES = [
     { name:'国外竞赛真题', desc:'NBC·BBO·ASOB 历年卷', url:'../国外竞赛/' },
     { name:'复习题 · 章节讲义', desc:'信号转导·光合等课件', url:'../复习题/' },
     { name:'资料 · 大纲与章程', desc:'考试大纲·章程·知识库', url:'../资料/' },
-    { name:'来源清单 来源.txt', desc:'全部文件的下载出处', url:'../来源.txt' }
+    { name:'来源清单 来源.txt', desc:'全部文件的下载出处', url:'../来源.txt' },
+    { name:'⬇️ 全库打包 ZIP', desc:'所有资源单文件下载 · 约290MB', url:'https://github.com/huicishengbodebianfu/biology-competition/releases/latest/download/biology-competition-full.zip' }
   ]}
 ];
 
@@ -489,6 +490,22 @@ const SENSITIVE = [
 ];
 
 /* ================= 渲染 ================= */
+/* 托管于 GitHub Pages 时，把本地相对路径映射为仓库在线地址 */
+const LOCAL_WEB = {
+  '../': 'https://github.com/huicishengbodebianfu/biology-competition',
+  '../模拟题/': 'https://github.com/huicishengbodebianfu/biology-competition/tree/main/模拟题',
+  '../国际奥赛IBO/': 'https://github.com/huicishengbodebianfu/biology-competition/tree/main/国际奥赛IBO',
+  '../国外竞赛/': 'https://github.com/huicishengbodebianfu/biology-competition/tree/main/国外竞赛',
+  '../复习题/': 'https://github.com/huicishengbodebianfu/biology-competition/tree/main/复习题',
+  '../资料/': 'https://github.com/huicishengbodebianfu/biology-competition/tree/main/资料',
+  '../来源.txt': 'https://github.com/huicishengbodebianfu/biology-competition/blob/main/来源.txt'
+};
+const IS_FILE = (location.protocol === 'file:');
+function resolveUrl(u){
+  if(!IS_FILE && LOCAL_WEB[u]) return LOCAL_WEB[u];
+  return u;
+}
+
 const grid = document.getElementById('grid');
 const tabs = document.getElementById('tabs');
 
@@ -513,7 +530,7 @@ function renderCard(cat){
   cat.sites.forEach(s => {
     const a = document.createElement('a');
     a.className = 'site';
-    a.href = s.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.href = resolveUrl(s.url); a.target = '_blank'; a.rel = 'noopener noreferrer';
     a.setAttribute('data-search', (s.name + ' ' + s.desc).toLowerCase());
     const av = document.createElement('span');
     av.className = 'avatar';
