@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生竞资源导航 · 液态玻璃导航站</title>
+<style>
+@font-face {
+  font-family: 'FZSJ';
+  src: url('FZSJ-ZHENXHDMX.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===== 主题变量 ===== */
+:root {
+  --grad-c1: #dbeafe; --grad-c2: #c7d2fe; --grad-c3: #bae6fd; --grad-c4: #ddd6fe; --grad-c5: #a5f3fc;
+  --glass-bg: rgba(255,255,255,0.34);
+  --glass-bg-strong: rgba(255,255,255,0.48);
+  --glass-border: rgba(255,255,255,0.55);
+  --glass-border-strong: rgba(255,255,255,0.75);
+  --ink: #1c2340;
+  --ink-soft: #4a5478;
+  --head-text: #1c2340;
+  --tab-bg: rgba(255,255,255,0.28);
+  --tab-border: rgba(255,255,255,0.5);
+  --filter-bg: rgba(255,255,255,0.30);
+  --input-text: #1c2340;
+  --input-ph: rgba(28,35,64,0.55);
+  --footer-text: rgba(28,35,64,0.65);
+}
+:root[data-theme="dark"] {
+  --grad-c1: #0a0e27; --grad-c2: #16245e; --grad-c3: #0e7490; --grad-c4: #1e1b4b; --grad-c5: #0ea5e9;
+  --glass-bg: rgba(18,22,45,0.45);
+  --glass-bg-strong: rgba(18,22,45,0.58);
+  --glass-border: rgba(255,255,255,0.14);
+  --glass-border-strong: rgba(255,255,255,0.26);
+  --ink: #e6ebff;
+  --ink-soft: #b3bce0;
+  --head-text: #eef2ff;
+  --tab-bg: rgba(255,255,255,0.08);
+  --tab-border: rgba(255,255,255,0.18);
+  --filter-bg: rgba(255,255,255,0.10);
+  --input-text: #ffffff;
+  --input-ph: rgba(255,255,255,0.6);
+  --footer-text: rgba(255,255,255,0.55);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  /* 五色冷色渐变动态背景（参考 Birthday 页做法） */
+  background: linear-gradient(-45deg, var(--grad-c1), var(--grad-c2), var(--grad-c3), var(--grad-c4), var(--grad-c5));
+  background-size: 400% 400%;
+  animation: gradientBG 16s ease-in-out infinite;
+}
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== 液态玻璃氛围光斑 ===== */
+.orb { position: fixed; border-radius:50%; filter: blur(70px); opacity:.55; z-index:0; pointer-events:none; }
+.orb.o1 { width:46vw; height:46vw; left:-12vw; top:-14vh; background: radial-gradient(circle,#93c5fd,#3b82f6 55%,transparent 72%); animation: orbFloat1 26s ease-in-out infinite alternate; }
+.orb.o2 { width:40vw; height:40vw; right:-10vw; top:32vh; background: radial-gradient(circle,#c4b5fd,#8b5cf6 55%,transparent 72%); animation: orbFloat2 32s ease-in-out infinite alternate; }
+.orb.o3 { width:34vw; height:34vw; left:24vw; bottom:-18vh; background: radial-gradient(circle,#67e8f9,#06b6d4 55%,transparent 72%); animation: orbFloat3 38s ease-in-out infinite alternate; }
+@keyframes orbFloat1 { to { transform: translate(9vw,7vh) scale(1.15); } }
+@keyframes orbFloat2 { to { transform: translate(-8vw,-9vh) scale(.88); } }
+@keyframes orbFloat3 { to { transform: translate(-11vw,5vh) scale(1.12); } }
+:root[data-theme="dark"] .orb { opacity:.38; }
+
+/* 点击粒子画布 */
+#particles { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none; display:block; }
+
+/* 主题切换按钮 */
+.theme-toggle {
+  position: fixed; top: 20px; right: 20px; z-index: 100;
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 1px solid var(--glass-border-strong);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  cursor: pointer; font-size: 22px; line-height:1;
+  display:flex; align-items:center; justify-content:center;
+  color: var(--head-text);
+  box-shadow: 0 10px 30px rgba(31,38,135,0.28), inset 0 1px 0 rgba(255,255,255,0.5);
+  transition: transform .25s ease;
+}
+.theme-toggle:hover { transform: scale(1.08) rotate(18deg); box-shadow: 0 14px 36px rgba(31,38,135,0.38), inset 0 1px 0 rgba(255,255,255,0.6); }
+.theme-toggle:active { transform: scale(.94); }
+
+/* 内容层 */
+.wrap { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 22px 60px; }
+
+/* 头部 */
+header { padding: 44px 0 8px; text-align: center; color: var(--head-text); }
+.brand {
+  font-family: 'FZSJ', "Microsoft YaHei", sans-serif;
+  font-size: clamp(30px, 5vw, 52px);
+  letter-spacing: 2px;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.18);
+  margin-bottom: 6px;
+}
+.sub { font-size: 14px; letter-spacing: 3px; opacity: .78; }
+
+/* 必应搜索框 */
+.searchbox {
+  max-width: 640px; margin: 30px auto 6px;
+  position: relative;
+  border-radius: 60px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.5);
+  display: flex; align-items: center; gap: 12px; padding: 6px 8px 6px 22px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.searchbox:focus-within { transform: translateY(-2px); box-shadow: 0 22px 60px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.6); }
+.searchbox .b {
+  font-family: 'FZSJ', "Segoe UI", sans-serif;
+  font-size: 20px; color: var(--head-text); white-space: nowrap;
+}
+.searchbox input {
+  flex: 1; border: 0; outline: 0; background: transparent;
+  color: var(--input-text); font-size: 16px; padding: 12px 4px;
+}
+.searchbox input::placeholder { color: var(--input-ph); }
+.searchbox button {
+  border: 0; cursor: pointer; border-radius: 50px;
+  padding: 11px 22px; font-size: 15px; color: #fff;
+  background: linear-gradient(135deg, #6a5cff, #22b8cf);
+  box-shadow: 0 8px 24px rgba(90,80,255,0.5), 0 2px 6px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.35);
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+  white-space: nowrap;
+}
+.searchbox button:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 12px 32px rgba(90,80,255,0.6), 0 3px 8px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.4); }
+.searchbox button:active { transform: translateY(1px) scale(.97); box-shadow: 0 4px 14px rgba(90,80,255,0.45); }
+
+/* 导航锚点 */
+nav.tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin: 26px 0 8px; }
+nav.tabs a {
+  text-decoration:none; color: var(--head-text); font-size: 13px;
+  padding: 8px 14px; border-radius: 40px;
+  background: var(--tab-bg);
+  border: 1px solid var(--tab-border);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 3px 10px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+nav.tabs a:hover { background: var(--glass-bg-strong); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(31,38,135,0.16), inset 0 1px 0 rgba(255,255,255,0.4); }
+
+/* 过滤输入 */
+.filter { max-width: 360px; margin: 18px auto 6px; position: relative; }
+.filter input {
+  width:100%; border-radius: 40px; padding: 12px 20px 12px 44px;
+  border: 1px solid var(--glass-border); outline:0;
+  background: var(--filter-bg); color: var(--input-text); font-size:14px;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.filter input::placeholder { color: var(--input-ph); }
+.filter input:focus {
+  border-color: rgba(122,110,255,0.65);
+  box-shadow: 0 0 0 4px rgba(106,92,255,0.16), 0 10px 26px rgba(31,38,135,0.14);
+}
+.filter .ico { position:absolute; left:16px; top:50%; transform:translateY(-50%); opacity:.75; font-size:15px; }
+
+/* 网格 */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; margin-top: 26px; }
+.card {
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--glass-bg-strong), var(--glass-bg));
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow:
+    0 20px 50px rgba(31,38,135,0.16),
+    inset 0 1px 0 rgba(255,255,255,0.60),
+    inset 0 -14px 28px rgba(255,255,255,0.06);
+  padding: 22px 18px 16px;
+  position: relative;
+  transition: transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 30px 70px rgba(31,38,135,0.26),
+    inset 0 1px 0 rgba(255,255,255,0.70);
+}
+.card h2 {
+  font-family:'FZSJ', "Microsoft YaHei", sans-serif;
+  font-size: 19px; color: var(--ink); letter-spacing:1px;
+  display:flex; align-items:center; gap:10px; margin-bottom: 14px;
+}
+.card h2 .em { font-size: 22px; }
+
+/* 站点条目 */
+.site {
+  display:flex; align-items:center; gap:12px;
+  text-decoration:none; color: var(--ink);
+  padding: 10px 12px; border-radius: 14px; margin-bottom: 4px;
+  transition: background .2s ease, transform .2s ease;
+}
+.site:hover { background: var(--glass-bg-strong); transform: translateX(3px); box-shadow: 0 4px 14px rgba(31,38,135,0.10); }
+.site .avatar {
+  width: 40px; height: 40px; flex: 0 0 40px; border-radius: 12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 18px; font-weight: 700; color:#fff;
+  background: linear-gradient(135deg, #6a5cff, #b14bf4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+.site .meta { min-width:0; }
+.site .name { font-size: 15px; font-weight: 600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.site .desc { font-size: 12px; color: var(--ink-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:.9; }
+
+/* 敏感站点：低调灰暗 */
+.sensitive { margin-top: 34px; }
+.sensitive .card { background: rgba(20,22,34,0.50); border-color: rgba(255,255,255,0.14); }
+.sensitive .card h2 { color: #d3daf0; }
+.sensitive .site { color: #d5dcf0; }
+.sensitive .site:hover { background: rgba(255,255,255,0.09); }
+.sensitive .site .avatar { background: linear-gradient(135deg, #3a4060, #242a44); }
+.sensitive .site .desc { color:#9aa2c0; }
+.sensitive .note { font-size:12px; color:#8f97b3; margin-top:8px; padding:0 4px; line-height:1.6; }
+.testbtn {
+  margin-left:auto;
+  border:1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.10);
+  color:#dbe2f5; cursor:pointer;
+  font-size:12px; padding:7px 16px; border-radius:30px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.18);
+  transition: background .2s, transform .2s, box-shadow .2s;
+  white-space:nowrap;
+}
+.testbtn:hover:not(:disabled){ background: rgba(255,255,255,0.22); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(34,184,207,0.35); }
+.testbtn:active:not(:disabled){ transform: translateY(1px); }
+.testbtn:disabled{ opacity:.55; cursor:default; }
+.mirrors { display:flex; flex-wrap:wrap; gap:7px; padding: 0 4px 12px 52px; }
+.mirror {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:12px; padding:4px 12px; border-radius:20px;
+  background: rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14);
+  color:#cdd4ec; text-decoration:none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+.mirror:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); box-shadow: 0 5px 14px rgba(0,0,0,0.24); }
+.mirror .dot { width:7px; height:7px; border-radius:50%; background:#5b6076; flex:0 0 7px; transition: background .2s; }
+.mirror .dot.ok { background:#37d67a; box-shadow:0 0 7px #37d67a; }
+.mirror .dot.fail { background:#ff6b6b; box-shadow:0 0 7px #ff6b6b; }
+.mirror .dot.timeout { background:#ffb020; box-shadow:0 0 7px #ffb020; }
+.mirror .dot.testing { background:#22b8cf; animation: blink .7s infinite; }
+@keyframes blink { 50% { opacity:.25; } }
+.test-result { font-size:12px; color:#aeb6d4; padding:2px 4px 6px 4px; line-height:1.7; }
+
+footer { text-align:center; color: var(--footer-text); font-size:12px; margin-top:46px; letter-spacing:1px; }
+
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+  .searchbox { padding-left: 16px; }
+  .searchbox .b { font-size: 17px; }
+  .mirrors { padding-left: 12px; }
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+<div class="orb o3"></div>
+
+<button class="theme-toggle" id="themeToggle" title="切换亮/暗主题">🌙</button>
+
+<div class="wrap">
+  <header>
+    <div class="brand">生竞资源导航</div>
+    <div class="sub">BIOLOGY OLYMPIAD · NAVIGATION</div>
+
+    <form class="searchbox" id="bingForm">
+      <span class="b">必应</span>
+      <input type="text" id="bingInput" placeholder="在必应搜索…" autocomplete="off">
+      <button type="submit">搜索</button>
+    </form>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <div class="filter">
+      <span class="ico">🔍</span>
+      <input type="text" id="filterInput" placeholder="过滤站点名称 / 简介…" autocomplete="off">
+    </div>
+  </header>
+
+  <main class="grid" id="grid"></main>
+
+  <section class="sensitive" id="sensitive"></section>
+
+  <footer>液态玻璃导航 · 粒子随光标流动 · 点击泛起涟漪 · 字体：方正书宋</footer>
+</div>
+
+<script>
+/* ================= 数据 ================= */
+const CATEGORIES = [
+  { icon:'🏛️', name:'竞赛官方机构', sites:[
+    { name:'中国植物学会', desc:'联赛主办方 · 官方真题', url:'https://www.botany.org.cn/' },
+    { name:'中国动物学会', desc:'联赛主办方 · 试题下载', url:'https://www.czs.org.cn/' },
+    { name:'IBO 国际奥赛官网', desc:'国际生物学奥赛真题', url:'https://www.ibo-info.org/' },
+    { name:'浙江省植物学会', desc:'浙江赛区通知与文件', url:'http://www.zjbs.org/' },
+    { name:'巴蜀高中生物之家', desc:'四川官方资源站', url:'http://chsbo.com/' },
+    { name:'中国科协青少年科技中心', desc:'竞赛主管机构', url:'https://www.cast.org.cn/' }
+  ]},
+  { icon:'📄', name:'真题试卷下载', sites:[
+    { name:'巴蜀高中生物之家', desc:'联赛/四川初赛真题', url:'http://chsbo.com/' },
+    { name:'biolympiads', desc:'国际生竞真题 · 解题技巧', url:'https://biolympiads.com/' },
+    { name:'IBO Papers', desc:'IBO 官方历年真题', url:'https://www.ibo-info.org/en/info/papers.html' },
+    { name:'七彩学科网', desc:'试卷资源下载', url:'https://www.7cxk.com/' },
+    { name:'高考资源网', desc:'试卷与解析下载', url:'https://www.ks5u.com/' },
+    { name:'高考直通车', desc:'竞赛真题合集', url:'https://app.gaokaozhitongche.com/' }
+  ]},
+  { icon:'🌍', name:'国外竞赛真题', sites:[
+    { name:'多伦多大学 NBC', desc:'加拿大生物竞赛历年卷+答案', url:'https://biocomp.utoronto.ca/exams/' },
+    { name:'英国 BBO', desc:'UKBC 官方历年试卷', url:'https://ukbiologycompetitions.org/british-biology-olympiad/' },
+    { name:'澳洲 ASO · 生物', desc:'2007-2025 官方真题+答案', url:'https://asi.edu.au/program/australian-science-olympiads/past-exam-papers-and-solutions/biology-olympiad-past-exams/' },
+    { name:'USABO 美国生奥', desc:'官方网站（真题见下方索引）', url:'https://www.usabo-trc.org/' },
+    { name:'biolympiads 真题索引', desc:'各国生竞真题总导航', url:'https://biolympiads.com/past-papers/' }
+  ]},
+  { icon:'📚', name:'复习知识库 / 笔记', sites:[
+    { name:'花火生物档案', desc:'生竞四大块知识库', url:'https://ximiku.github.io/HanaBio-Archive/' },
+    { name:'BioNote 生竞笔记', desc:'混乱邪恶生物竞赛', url:'https://www.cnblogs.com/PCwqyy/p/-/BioNote' },
+    { name:'osm.bio', desc:'生竞免费资源站', url:'https://osm.bio/' },
+    { name:'GitHub 章节讲义', desc:'Ding-zibo/Biology', url:'https://github.com/Ding-zibo/Biology' },
+    { name:'四哥生物论坛', desc:'生物教师交流社区', url:'https://biosige.com/' }
+  ]},
+  { icon:'🐙', name:'实用 Git 仓库', sites:[
+    { name:'Ding-zibo/Biology', desc:'生竞章节讲义PPT·本库复习题出处', url:'https://github.com/Ding-zibo/Biology' },
+    { name:'ximiku/HanaBio-Archive', desc:'花火生物档案源码·本地已收录', url:'https://github.com/ximiku/HanaBio-Archive' },
+    { name:'OSSU Bioinformatics', desc:'开放大学生信课程体系', url:'https://github.com/ossu/bioinformatics' },
+    { name:'Biopython', desc:'Python 生物信息官方库', url:'https://github.com/biopython/biopython' },
+    { name:'SeqKit', desc:'FASTA/Q 序列处理工具箱', url:'https://github.com/shenwei356/seqkit' },
+    { name:'OpenStax 组织', desc:'开源教材仓库（英文）', url:'https://github.com/openstax' },
+    { name:'话题·biology-olympiad', desc:'生奥相关 GitHub 仓库聚合', url:'https://github.com/topics/biology-olympiad' },
+    { name:'话题·biology', desc:'GitHub 生物学项目聚合', url:'https://github.com/topics/biology' }
+  ]},
+  { icon:'🎓', name:'在线课程 / 视频', sites:[
+    { name:'学堂在线', desc:'清华慕课平台', url:'https://www.xuetangx.com/' },
+    { name:'中国大学MOOC', desc:'大学课程', url:'https://www.icourse163.org/' },
+    { name:'国家智慧教育平台', desc:'官方教育资源', url:'https://www.smartedu.cn/' },
+    { name:'哔哩哔哩', desc:'视频课程资源', url:'https://www.bilibili.com/' },
+    { name:'可汗学院', desc:'英文课程', url:'https://www.khanacademy.org/' },
+    { name:'Coursera', desc:'国际慕课', url:'https://www.coursera.org/' }
+  ]},
+  { icon:'🧪', name:'开放课程与虚拟实验', sites:[
+    { name:'OpenStax Biology 2e', desc:'免费正版英文教材', url:'https://openstax.org/details/books/biology-2e' },
+    { name:'LibreTexts 生物库', desc:'开源生物学教科书', url:'https://bio.libretexts.org/' },
+    { name:'MIT OpenCourseWare', desc:'MIT 本科课程讲义', url:'https://ocw.mit.edu/' },
+    { name:'LabXchange', desc:'哈佛/MIT 虚拟实验室', url:'https://www.labxchange.org/' },
+    { name:'冷泉港 DNA 学习中心', desc:'实验技术动画演示', url:'https://dnalc.cshl.edu/' },
+    { name:'PhET 交互模拟', desc:'科学交互式仿真', url:'https://phet.colorado.edu/' },
+    { name:'JoVE', desc:'实验操作视频期刊', url:'https://www.jove.com/' }
+  ]},
+  { icon:'✍️', name:'刷题 / 题库', sites:[
+    { name:'学科网', desc:'题库与试卷', url:'https://www.zxxk.com/' },
+    { name:'21世纪教育网', desc:'试卷题库', url:'https://zy.21cnjy.com/' },
+    { name:'人人文库', desc:'文档题库', url:'https://www.renrendoc.com/' },
+    { name:'组卷网', desc:'组卷刷题', url:'https://zujuan.xkw.com/' }
+  ]},
+  { icon:'🧬', name:'专业数据库与工具', sites:[
+    { name:'NCBI BLAST', desc:'核酸/蛋白序列比对', url:'https://blast.ncbi.nlm.nih.gov/' },
+    { name:'RCSB PDB', desc:'蛋白质三维结构库', url:'https://www.rcsb.org/' },
+    { name:'AlphaFold DB', desc:'AI 蛋白结构预测库', url:'https://alphafold.ebi.ac.uk/' },
+    { name:'UniProt', desc:'蛋白质序列与功能', url:'https://www.uniprot.org/' },
+    { name:'KEGG', desc:'代谢通路图谱', url:'https://www.kegg.jp/' },
+    { name:'ExPASy', desc:'生信分析工具箱', url:'https://www.expasy.org/' },
+    { name:'NCBI Taxonomy', desc:'分类学数据库', url:'https://www.ncbi.nlm.nih.gov/taxonomy' }
+  ]},
+  { icon:'🌿', name:'物种图鉴与图像库', sites:[
+    { name:'中国植物图像库 PPBC', desc:'植物照片图鉴', url:'https://ppbc.iplant.cn/' },
+    { name:'植物智 iPlant', desc:'植物志·名称·图谱', url:'http://www.iplant.cn/' },
+    { name:'iNaturalist', desc:'全球物种观察记录', url:'https://www.inaturalist.org/' },
+    { name:'GBIF', desc:'全球生物多样性数据', url:'https://www.gbif.org/' }
+  ]},
+  { icon:'📖', name:'百科 / 词典', sites:[
+    { name:'百度百科', desc:'中文百科', url:'https://baike.baidu.com/' },
+    { name:'维基百科', desc:'开放百科', url:'https://zh.wikipedia.org/' },
+    { name:'术语在线', desc:'生物学术语规范', url:'https://www.termonline.cn/' },
+    { name:'大英百科全书', desc:'Britannica', url:'https://www.britannica.com/' }
+  ]},
+  { icon:'🔬', name:'学术文献 / 数据库', sites:[
+    { name:'PubMed', desc:'生物医学文献', url:'https://pubmed.ncbi.nlm.nih.gov/' },
+    { name:'PMC', desc:'全文文献库', url:'https://pmc.ncbi.nlm.nih.gov/' },
+    { name:'NCBI Books', desc:'生命科学电子书', url:'https://www.ncbi.nlm.nih.gov/books/' },
+    { name:'Google Scholar', desc:'学术搜索', url:'https://scholar.google.com/' },
+    { name:'百度学术', desc:'中文学术搜索', url:'https://xueshu.baidu.com/' },
+    { name:'中国知网', desc:'CNKI 中文文献', url:'https://www.cnki.net/' },
+    { name:'万方数据', desc:'中文文献', url:'https://www.wanfangdata.com.cn/' }
+  ]},
+  { icon:'📕', name:'电子书 / 教材', sites:[
+    { name:'高等教育出版社电子书', desc:'高教社官方教材', url:'https://abooks.hep.com.cn/' },
+    { name:'全国图书馆参考咨询联盟', desc:'文献传递', url:'http://www.ucdrs.superlib.net/' },
+    { name:'中国国家数字图书馆', desc:'国家图书馆', url:'https://www.nlc.cn/' }
+  ]},
+  { icon:'💬', name:'社区与备考资讯', sites:[
+    { name:'质心教育·生物竞赛', desc:'赛制资讯与备考指导', url:'https://cbo.eduzhixin.com/' },
+    { name:'百度贴吧·生物竞赛吧', desc:'考生交流社区', url:'https://tieba.baidu.com/f?kw=%E7%94%9F%E7%89%A9%E7%AB%9E%E8%B5%9B' },
+    { name:'知乎·生物竞赛', desc:'经验帖与书单搜索', url:'https://www.zhihu.com/search?type=content&q=%E7%94%9F%E7%89%A9%E7%AB%9E%E8%B5%9B' }
+  ]},
+  { icon:'🤖', name:'AI 助手', sites:[
+    { name:'DeepSeek', desc:'深度求索 AI', url:'https://chat.deepseek.com/' },
+    { name:'Kimi', desc:'月之暗面 AI', url:'https://kimi.moonshot.cn/' },
+    { name:'通义千问', desc:'阿里 AI', url:'https://tongyi.aliyun.com/' },
+    { name:'ChatGPT', desc:'OpenAI', url:'https://chatgpt.com/' },
+    { name:'Grok', desc:'xAI', url:'https://grok.com/' },
+    { name:'Gemini', desc:'Google AI', url:'https://gemini.google.com/' }
+  ]},
+  { icon:'🛠️', name:'常用工具', sites:[
+    { name:'有道翻译', desc:'中英翻译', url:'https://fanyi.youdao.com/' },
+    { name:'DeepL', desc:'精准翻译', url:'https://www.deepl.com/' },
+    { name:'Overleaf', desc:'LaTeX 编辑器', url:'https://www.overleaf.com/' },
+    { name:'Zotero', desc:'文献管理', url:'https://www.zotero.org/' },
+    { name:'ProcessOn', desc:'思维导图/流程图', url:'https://www.processon.com/' },
+    { name:'白描 OCR', desc:'文字识别', url:'https://baimiao.uzero.cn/' }
+  ]},
+  { icon:'🔎', name:'搜索引擎', sites:[
+    { name:'必应', desc:'Bing 搜索', url:'https://www.bing.com/' }
+  ]},
+  { icon:'💾', name:'本地资料速览', sites:[
+    { name:'全国联赛真题 2015-2026', desc:'本库根目录 · 试题+答案解析', url:'../' },
+    { name:'模拟题 · 省级初赛', desc:'四川2019-2026 · 浙江2022', url:'../模拟题/' },
+    { name:'国际奥赛 IBO', desc:'IBO 2017-2024 官方卷', url:'../国际奥赛IBO/' },
+    { name:'国外竞赛真题', desc:'NBC·BBO·ASOB 历年卷', url:'../国外竞赛/' },
+    { name:'复习题 · 章节讲义', desc:'信号转导·光合等课件', url:'../复习题/' },
+    { name:'资料 · 大纲与章程', desc:'考试大纲·章程·知识库', url:'../资料/' },
+    { name:'来源清单 来源.txt', desc:'全部文件的下载出处', url:'../来源.txt' }
+  ]}
+];
+
+const SENSITIVE = [
+  { name:'Sci-Hub', desc:'文献获取', mirrors:[
+    { label:'sci-hub.se', url:'https://sci-hub.se/' },
+    { label:'sci-hub.st', url:'https://sci-hub.st/' },
+    { label:'sci-hub.ru', url:'https://sci-hub.ru/' },
+    { label:'sci-hub.ee', url:'https://sci-hub.ee/' },
+    { label:'sci-hub.wf', url:'https://sci-hub.wf/' }
+  ]},
+  { name:'Library Genesis', desc:'英文原版教材 / 学术专著下载', mirrors:[
+    { label:'libgen.is', url:'https://libgen.is/' },
+    { label:'libgen.rs', url:'https://libgen.rs/' },
+    { label:'libgen.st', url:'https://libgen.st/' },
+    { label:'libgen.li', url:'https://libgen.li/' },
+    { label:'libgen.gs', url:'https://libgen.gs/' }
+  ]},
+  { name:'BookSC', desc:'科研电子书（LibGen 姊妹站）', mirrors:[
+    { label:'booksc.eu', url:'https://booksc.eu/' },
+    { label:'booksee.org', url:'https://booksee.org/' }
+  ]},
+  { name:'Zhelper', desc:'Z-Lib 中文界面聚合搜索', mirrors:[
+    { label:'zhelper.net', url:'https://zhelper.net/' }
+  ]},
+  { name:'PDF Drive', desc:'英文电子书搜索引擎（免注册）', mirrors:[
+    { label:'pdfdrive.com', url:'https://www.pdfdrive.com/' }
+  ]},
+  { name:'PDF Room', desc:'PDF 电子书检索下载', mirrors:[
+    { label:'pdfroom.com', url:'https://pdfroom.com/' }
+  ]},
+  { name:'Z-Library', desc:'电子书', mirrors:[
+    { label:'z-lib.sk', url:'https://z-lib.sk/' },
+    { label:'z-lib.gd', url:'https://z-lib.gd/' },
+    { label:'z-library.website', url:'https://z-library.website/' },
+    { label:'z-library.qa', url:'https://z-library.qa/' },
+    { label:'z-library.im', url:'https://z-library.im/' },
+    { label:'zlib.li', url:'https://zlib.li/' },
+    { label:'z-library.gy', url:'https://z-library.gy/' },
+    { label:'z-lib.by', url:'https://z-lib.by/' },
+    { label:'z-library.sk', url:'https://z-library.sk/' },
+    { label:'intl.su', url:'https://intl.su/' }
+  ]},
+  { name:"Anna's Archive", desc:'电子书/文献聚合', mirrors:[
+    { label:'annas-archive.org', url:'https://annas-archive.org/' },
+    { label:'annas-archive.se', url:'https://annas-archive.se/' },
+    { label:'annas-archive.li', url:'https://annas-archive.li/' },
+    { label:'annas-archive.gs', url:'https://annas-archive.gs/' },
+    { label:'annas-archive.to', url:'https://annas-archive.to/' }
+  ]}
+];
+
+/* ================= 渲染 ================= */
+const grid = document.getElementById('grid');
+const tabs = document.getElementById('tabs');
+
+const AVATAR_COLORS = [
+  'linear-gradient(135deg,#6a5cff,#b14bf4)',
+  'linear-gradient(135deg,#22b8cf,#4dabf7)',
+  'linear-gradient(135deg,#12b886,#37d67a)',
+  'linear-gradient(135deg,#ff922b,#ff6b6b)',
+  'linear-gradient(135deg,#f06595,#ff8787)',
+  'linear-gradient(135deg,#5c7cfa,#7048e8)'
+];
+let colorIdx = 0;
+function nextColor(){ const c = AVATAR_COLORS[colorIdx % AVATAR_COLORS.length]; colorIdx++; return c; }
+
+function renderCard(cat){
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.id = 'cat-' + cat.name.replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g,'');
+  const h = document.createElement('h2');
+  h.innerHTML = '<span class="em">'+cat.icon+'</span>'+cat.name;
+  div.appendChild(h);
+  cat.sites.forEach(s => {
+    const a = document.createElement('a');
+    a.className = 'site';
+    a.href = s.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.setAttribute('data-search', (s.name + ' ' + s.desc).toLowerCase());
+    const av = document.createElement('span');
+    av.className = 'avatar';
+    av.style.background = nextColor();
+    av.textContent = (s.name.replace(/[^\u4e00-\u9fa5a-zA-Z]/g,'').charAt(0) || '·').toUpperCase();
+    const meta = document.createElement('span');
+    meta.className = 'meta';
+    meta.innerHTML = '<span class="name">'+s.name+'</span><br><span class="desc">'+s.desc+'</span>';
+    a.appendChild(av); a.appendChild(meta);
+    div.appendChild(a);
+  });
+  return div;
+}
+
+function renderTabs(){
+  const items = CATEGORIES.map(c => ({icon:c.icon, name:c.name}));
+  items.push({icon:'🕳️', name:'敏感站点'});
+  items.forEach(it => {
+    const a = document.createElement('a');
+    a.textContent = it.icon + ' ' + it.name;
+    a.href = '#cat-' + it.name.replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g,'');
+    tabs.appendChild(a);
+  });
+}
+
+function renderAll(){
+  CATEGORIES.forEach(c => grid.appendChild(renderCard(c)));
+  renderSensitive();
+}
+
+/* ================= 敏感站点渲染（含镜像 + 测试） ================= */
+function renderSensitive(){
+  const sec = document.getElementById('sensitive');
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.id = 'cat-敏感站点';
+
+  const h = document.createElement('h2');
+  h.innerHTML = '<span class="em">🕳️</span>敏感站点';
+  const btn = document.createElement('button');
+  btn.className = 'testbtn';
+  btn.textContent = '🔄 测试可达性';
+  h.appendChild(btn);
+  card.appendChild(h);
+
+  SENSITIVE.forEach(s => {
+    const a = document.createElement('a');
+    a.className = 'site';
+    a.href = s.mirrors[0].url;
+    a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.setAttribute('data-search', (s.name + ' ' + s.desc).toLowerCase());
+    const av = document.createElement('span');
+    av.className = 'avatar';
+    av.style.background = 'linear-gradient(135deg,#3a4060,#242a44)';
+    av.textContent = s.name.charAt(0);
+    const meta = document.createElement('span');
+    meta.className = 'meta';
+    meta.innerHTML = '<span class="name">'+s.name+'</span><br><span class="desc">'+s.desc+'</span>';
+    a.appendChild(av); a.appendChild(meta);
+    card.appendChild(a);
+
+    const mrow = document.createElement('div');
+    mrow.className = 'mirrors';
+    s.mirrors.forEach(m => {
+      const ml = document.createElement('a');
+      ml.className = 'mirror';
+      ml.href = m.url; ml.target = '_blank'; ml.rel = 'noopener noreferrer';
+      ml.dataset.url = m.url;
+      ml.innerHTML = '<span class="dot"></span>' + m.label;
+      mrow.appendChild(ml);
+    });
+    card.appendChild(mrow);
+  });
+
+  const note = document.createElement('div');
+  note.className = 'note';
+  note.innerHTML = '说明：以下站点涉及版权/访问受限，地址可能变动，仅供学习参考，请遵守当地法律法规。<br>' +
+    '常用搭配：英文原版教材（Campbell Biology 等）→ LibGen / Z-Library · 期刊论文 → Sci-Hub · 综合聚合 → Anna\'s Archive · 中文界面 → Zhelper。<br>' +
+    '部分镜像在国内网络直连不通，可切换代理后点击「测试可达性」逐个验证。';
+  card.appendChild(note);
+
+  const result = document.createElement('div');
+  result.className = 'test-result';
+  card.appendChild(result);
+
+  btn.addEventListener('click', () => testAll(card, btn, result));
+  sec.appendChild(card);
+}
+
+/* ================= 站点可达性检测 ================= */
+async function testMirror(el){
+  const url = el.dataset.url;
+  const dot = el.querySelector('.dot');
+  dot.className = 'dot testing';
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12000);
+  try {
+    await fetch(url, { mode:'no-cors', signal: controller.signal, cache:'no-store' });
+    clearTimeout(timer);
+    dot.className = 'dot ok';
+    return 'ok';
+  } catch(e){
+    clearTimeout(timer);
+    dot.className = 'dot ' + (e.name === 'AbortError' ? 'timeout' : 'fail');
+    return (e.name === 'AbortError' ? 'timeout' : 'fail');
+  }
+}
+
+async function testAll(card, btn, result){
+  btn.disabled = true;
+  btn.textContent = '⏳ 检测中…';
+  result.textContent = '';
+  const mirrors = card.querySelectorAll('.mirror');
+  mirrors.forEach(m => m.querySelector('.dot').className = 'dot');
+
+  const stats = { ok:0, fail:0, timeout:0 };
+  const jobs = [];
+  mirrors.forEach(m => {
+    jobs.push(testMirror(m).then(r => { stats[r]++; }));
+  });
+  await Promise.all(jobs);
+
+  btn.disabled = false;
+  btn.textContent = '🔄 重新测试';
+  result.innerHTML = '检测结果：<span style="color:#37d67a">可达 '+stats.ok+'</span> · ' +
+    '<span style="color:#ff6b6b">不可达 '+stats.fail+'</span> · ' +
+    '<span style="color:#ffb020">超时 '+stats.timeout+'</span>' +
+    '　（浏览器跨域探测仅供参考，建议直接点击镜像验证）';
+}
+
+/* ================= 必应搜索 ================= */
+document.getElementById('bingForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const q = document.getElementById('bingInput').value.trim();
+  if(q){ window.open('https://www.bing.com/search?q=' + encodeURIComponent(q), '_blank'); }
+});
+
+/* ================= 过滤 ================= */
+document.getElementById('filterInput').addEventListener('input', function(){
+  const kw = this.value.trim().toLowerCase();
+  document.querySelectorAll('.site').forEach(el => {
+    const hit = el.getAttribute('data-search').indexOf(kw) !== -1;
+    el.style.display = kw === '' || hit ? '' : 'none';
+  });
+  document.querySelectorAll('.card').forEach(card => {
+    let any = false;
+    card.querySelectorAll('.site').forEach(s => { if(s.style.display !== 'none') any = true; });
+    card.style.display = any ? '' : 'none';
+  });
+});
+
+/* ================= 主题切换（亮/暗） ================= */
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('theme', theme); } catch(e){}
+}
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+});
+(function initTheme(){
+  let saved = 'light';
+  try { saved = localStorage.getItem('theme') || 'light'; } catch(e){}
+  applyTheme(saved);
+})();
+
+/* ================= 氛围粒子场：漂浮 · 鼠标斥力 · 点击涟漪 ================= */
+const pCanvas = document.getElementById('particles');
+const pctx = pCanvas.getContext('2d');
+let PW = 0, PH = 0;
+function resizeP(){ PW = pCanvas.width = innerWidth; PH = pCanvas.height = innerHeight; }
+resizeP();
+addEventListener('resize', resizeP);
+
+const PALETTE = [210, 225, 250, 190, 265];   /* 冷色系色相：蓝/靛/天蓝/青/紫 */
+const parts = [];
+function makePart(x, y){
+  return {
+    x: x !== undefined ? x : Math.random()*PW,
+    y: y !== undefined ? y : Math.random()*PH,
+    r: 1.2 + Math.random()*2.6,
+    vx: (Math.random()-.5)*.35,
+    vy: -.12 - Math.random()*.38,
+    hue: PALETTE[(Math.random()*PALETTE.length)|0] + Math.random()*14,
+    a: .25 + Math.random()*.4,
+    tw: Math.random()*Math.PI*2
+  };
+}
+(function seed(){
+  const n = Math.min(90, Math.round(innerWidth * innerHeight / 18000));
+  for(let i=0;i<n;i++) parts.push(makePart());
+})();
+
+const mouse = { x:-9999, y:-9999 };
+addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+document.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+const rings = [];
+addEventListener('click', e => { rings.push({ x:e.clientX, y:e.clientY, r:0, a:.5 }); });
+
+function stepParticles(){
+  pctx.clearRect(0,0,PW,PH);
+
+  /* 漂浮粒子 */
+  for(const p of parts){
+    const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx*dx + dy*dy;
+    if(d2 < 16900 && d2 > .01){                       /* 130px 斥力圈 */
+      const d = Math.sqrt(d2), f = (130-d)/130 * .55;
+      p.vx += dx/d*f; p.vy += dy/d*f;
+    }
+    p.vx *= .96; p.vy = p.vy*.96 - .006;              /* 阻尼并回归上浮趋势 */
+    if(p.vy < -.6) p.vy = -.6;
+    p.x += p.vx; p.y += p.vy;
+    if(p.y < -8) Object.assign(p, makePart(Math.random()*PW, PH+8));
+    else if(p.x < -8) p.x = PW+8;
+    else if(p.x > PW+8) p.x = -8;
+
+    p.tw += .02;
+    const alpha = p.a * (.75 + .25*Math.sin(p.tw));   /* 轻微闪烁 */
+    pctx.beginPath();
+    pctx.fillStyle = 'hsla('+p.hue+',85%,72%,'+alpha.toFixed(3)+')';
+    pctx.shadowColor = 'hsla('+p.hue+',85%,65%,.8)';
+    pctx.shadowBlur = 6;
+    pctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    pctx.fill();
+  }
+
+  /* 点击涟漪：扩散光环推开沿途粒子 */
+  for(let i=rings.length-1;i>=0;i--){
+    const rg = rings[i];
+    rg.r += 6.5; rg.a *= .93;
+    if(rg.a < .015){ rings.splice(i,1); continue; }
+    pctx.beginPath();
+    pctx.strokeStyle = 'rgba(255,255,255,'+rg.a.toFixed(3)+')';
+    pctx.lineWidth = 2;
+    pctx.shadowColor = 'rgba(160,170,255,.8)';
+    pctx.shadowBlur = 12;
+    pctx.arc(rg.x, rg.y, rg.r, 0, Math.PI*2);
+    pctx.stroke();
+    for(const p of parts){
+      const dx = p.x-rg.x, dy = p.y-rg.y, d = Math.sqrt(dx*dx+dy*dy);
+      if(Math.abs(d-rg.r) < 26 && d > 1){
+        const f = .35*(1-Math.abs(d-rg.r)/26);
+        p.vx += dx/d*f; p.vy += dy/d*f;
+      }
+    }
+  }
+  pctx.shadowBlur = 0;
+}
+
+(function loop(){
+  requestAnimationFrame(loop);
+  if(document.hidden) return;
+  stepParticles();
+})();
+
+/* ================= 初始化 ================= */
+renderTabs();
+renderAll();
+</script>
+</body>
+</html>
